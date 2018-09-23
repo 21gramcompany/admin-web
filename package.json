@@ -24,8 +24,12 @@
   "homepage": "https://github.com/21gramcompany/admin-web#readme",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
     "express": "^4.16.3",
-    "nuxt": "^2.0.0"
+    "material-design-icons-iconfont": "^3.0.3",
+    "nuxt": "^2.0.0",
+    "ramda": "^0.25.0",
+    "vuetify": "^1.2.4"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

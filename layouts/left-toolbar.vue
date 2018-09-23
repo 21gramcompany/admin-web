@@ -60,15 +60,15 @@
 <script>
   export default {
     data: () => ({
-      drawer: null
+      drawer: null,
     }),
     props: {
-      source: String
+      source: String,
     },
     methods: {
       handleClick: () => {
         console.log('clicked');
-      }
-    }
-  }
+      },
+    },
+  };
 </script>

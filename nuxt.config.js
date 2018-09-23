@@ -17,14 +17,14 @@ module.exports = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js project' }
+      { hid: 'description', name: 'description', content: 'Nuxt.js project' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    ],
   },
   plugins: [
-    { src: '~/plugins/components' }
+    { src: '~/plugins/components' },
   ],
   /*
   ** Customize the progress bar color
@@ -33,7 +33,7 @@ module.exports = {
   /*
     ** Global CSS
     */
-  css: ['~/assets/css/main.css'],
+  css: [ '~/assets/css/main.css' ],
   /*
     ** Add proxy
     */
@@ -42,19 +42,19 @@ module.exports = {
     ** Add axios globally
     */
   build: {
-    vendor: ['axios'],
+    vendor: [ 'axios' ],
     /*
         ** Run ESLINT on save
         */
-    extend(config, ctx) {
+    extend (config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
-          exclude: /(node_modules)/
-        })
+          exclude: /(node_modules)/,
+        });
       }
-    }
-  }
-}
+    },
+  },
+};

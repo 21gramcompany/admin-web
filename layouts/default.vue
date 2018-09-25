@@ -1,25 +1,23 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer
+      mini-variant.sync="miniVariant"
       v-model="drawer"
       fixed
       app
     >
       <v-list dense>
-        <v-list-tile @click="handleClick">
+        <v-list-tile
+                :to="menu.to"
+                :key="index"
+                v-for="(menu, index) in menus"
+                exact
+        >
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon v-html="menu.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Home</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile @click="handleClick">
-          <v-list-tile-action>
-            <v-icon>contact_mail</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>Contact</v-list-tile-title>
+            <v-list-tile-title v-text="menu.title"></v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -43,6 +41,13 @@
   export default {
     data: () => ({
       drawer: null,
+      menus: [
+        { icon: 'home', title: 'Home', to: '/' },
+        { icon: 'person', title: 'User', to: '/users' },
+        { icon: 'pets', title: 'Reservation', to: '/reservations' },
+        { icon: 'add_alert', title: 'Notice', to: '/notice' },
+      ],
+      miniVariant: false,
     }),
     props: {
       source: String,
@@ -51,6 +56,7 @@
       handleClick: () => {
         console.log('clicked');
       },
+
     },
   };
 </script>

@@ -6,7 +6,7 @@ const { log } = console;
 
 router.use('/users', function (req, res) {
   log(JSON.stringify(req.query));
-  res.status(200).json(users);
+  res.status(200).json({ users, count: 7 });
 });
 
 export default router;

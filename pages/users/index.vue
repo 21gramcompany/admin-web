@@ -87,8 +87,10 @@
                 v-model="selected"
                 :headers="headers"
                 :items="users"
+                :total-items="count"
+                :pagination.sync="pagination"
                 item-key="id"
-                :loading="false"
+                :loading="$store.state.loading"
                 class="elevation-1"
         >
             <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
@@ -131,6 +133,8 @@
         ],
         selected: [],
         accountId: '',
+        count: 7,
+        pagination: {},
         name: '',
         email: '',
         auth: '',
@@ -157,6 +161,14 @@
         ],
         users,
       }),
+      watch: {
+        pagination: {
+          async handler () {
+            await this.search();
+          },
+          deep: true,
+        },
+      },
       methods: {
         async search () {
           const {
@@ -166,6 +178,8 @@
             auth,
             status,
           } = this;
+          const { sortBy, descending, page, rowsPerPage } = this.pagination;
+          this.$store.commit('startLoading');
           const res = await axios({
             method: 'get',
             url: '/api/users',
@@ -175,9 +189,15 @@
               email,
               auth,
               status,
+              sortBy,
+              descending,
+              page,
+              rowsPerPage,
             },
           });
-          this.users = res.data;
+          this.$store.commit('endLoading');
+          this.users = res.data.users;
+          this.count = res.data.count;
         },
         reset () {
           alert(this);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-breadcrumbs>
+        <v-breadcrumbs class="bc-grey mb-2">
             <v-icon slot="divider">chevron_right</v-icon>
             <v-breadcrumbs-item
                     v-for="breadcrumb in breadcrumbs"
@@ -11,7 +11,7 @@
                 {{ breadcrumb.text }}
             </v-breadcrumbs-item>
         </v-breadcrumbs>
-        <h1>User <small>new</small></h1>
+        <h1 class="mb-2">User <small class="grey--text">new</small></h1>
         <v-card>
             <v-card-text>
                 <v-form>

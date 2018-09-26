@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-breadcrumbs>
+        <v-breadcrumbs class="bc-grey mb-2">
             <v-icon slot="divider">chevron_right</v-icon>
             <v-breadcrumbs-item
                     v-for="breadcrumb in breadcrumbs"
@@ -11,8 +11,8 @@
                 {{ breadcrumb.text }}
             </v-breadcrumbs-item>
         </v-breadcrumbs>
-        <h1>User <small>list</small></h1>
-        <v-card>
+        <h1 class="mb-2">User <small class="grey--text">list</small></h1>
+        <v-card class="mb-2">
             <v-card-text>
                 <v-form>
                     <v-container grid-list-md text-xs-center>
@@ -66,7 +66,7 @@
                 <v-btn color="white">
                     Reset<v-icon right>restore</v-icon>
                 </v-btn>
-                <v-btn color="white">
+                <v-btn color="success">
                     Search<v-icon right>search</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -223,10 +223,3 @@
       },
     };
 </script>
-
-<style>
-.short-column {
-    width: 80px;
-}
-
-</style>

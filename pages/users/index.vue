@@ -6,14 +6,15 @@
                     v-for="breadcrumb in breadcrumbs"
                     :key="breadcrumb.text"
                     :disabled="breadcrumb.disabled"
-                    :to="breadcrumb.to"
+                    :href="breadcrumb.to"
             >
                 {{ breadcrumb.text }}
             </v-breadcrumbs-item>
         </v-breadcrumbs>
+        <h1>User <small>list</small></h1>
         <v-toolbar flat color="white">
             <v-spacer></v-spacer>
-            <v-btn color="info">New</v-btn>
+            <v-btn color="info" href="/users/new">New</v-btn>
             <v-btn color="error">Delete</v-btn>
         </v-toolbar>
         <v-data-table

@@ -1,5 +1,5 @@
 const sendOption = {
-  timeout: 1000,
+  timeout: 2500,
   baseURL: '',
   headers: { 'Content-Type': 'application/json' },
   withCredentials: false,

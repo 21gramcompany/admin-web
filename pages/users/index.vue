@@ -23,6 +23,7 @@
                                         placeholder="id"
                                         counter="10"
                                         clearable
+                                        v-model="accountId"
                                 />
                             </v-flex>
                             <v-flex>
@@ -31,6 +32,7 @@
                                         placeholder="홍길동"
                                         counter="10"
                                         clearable
+                                        v-model="name"
                                 />
                             </v-flex>
                             <v-flex>
@@ -39,6 +41,7 @@
                                         placeholder="abc@gmail.com"
                                         counter="50"
                                         clearable
+                                        v-model="email"
                                 />
                             </v-flex>
                             <v-flex>
@@ -47,6 +50,7 @@
                                         :items="authItems"
                                         item-text="text"
                                         item-value="auth"
+                                        v-model="auth"
                                 />
                             </v-flex>
                             <v-flex>
@@ -55,6 +59,7 @@
                                         :items="statusItems"
                                         item-text="text"
                                         item-value="status"
+                                        v-model="status"
                                 />
                             </v-flex>
                         </v-layout>
@@ -66,7 +71,7 @@
                 <v-btn color="white">
                     Reset<v-icon right>restore</v-icon>
                 </v-btn>
-                <v-btn color="success">
+                <v-btn color="success" @click="search">
                     Search<v-icon right>search</v-icon>
                 </v-btn>
             </v-card-actions>
@@ -116,6 +121,8 @@
 </template>
 
 <script>
+    import axios from 'axios';
+    import users from '../../common/mock/users';
     export default {
       data: () => ({
         breadcrumbs: [
@@ -123,6 +130,11 @@
           { text: 'user' },
         ],
         selected: [],
+        accountId: '',
+        name: '',
+        email: '',
+        auth: '',
+        status: '',
         headers: [
           { text: 'No', value: 'no', align: 'center' },
           { text: 'Id', value: 'accountId', align: 'center' },
@@ -143,82 +155,32 @@
           { text: '가입', status: 'join' },
           { text: '탈퇴', status: 'exit' },
         ],
-        users: [
-          {
-            id: 1,
-            no: 7,
-            accountId: 'kdo',
-            name: 'kdo',
-            email: 'kdo@gmail.com',
-            auth: 'admin',
-            status: 'ok',
-            createDate: '2015-01-12',
-          },
-          {
-            id: 2,
-            no: 6,
-            accountId: 'bbq',
-            name: 'bbq',
-            email: 'kdo@gmail.com',
-            auth: 'owner',
-            status: 'ok',
-            createDate: '2016-01-12'
-          },
-          {
-            id: 3,
-            no: 5,
-            accountId: 'hjh',
-            name: 'hjh',
-            email: 'kdo@gmail.com',
-            auth: 'user',
-            status: 'ok',
-            createDate: '2017-01-12'
-          },
-          {
-            id: 4,
-            no: 4,
-            accountId: 'gom',
-            name: 'gom',
-            email: 'kdo@gmail.com',
-            auth: 'hospital',
-            status: 'ok',
-            createDate: '2018-01-12'
-          },
-          {
-            id: 5,
-            no: 3,
-            accountId: 'lyh',
-            name: 'lyh',
-            email: 'kdo@gmail.com',
-            auth: 'owner',
-            status: 'ok',
-            createDate: '2015-10-12'
-          },
-          {
-            id: 6,
-            no: 2,
-            accountId: 'jwt',
-            name: 'jwt',
-            email: 'kdo@gmail.com',
-            auth: 'hospital',
-            status: 'ok',
-            createDate: '2015-10-12'
-          },
-          {
-            id: 7,
-            no: 1,
-            accountId: 'iu',
-            name: 'iu',
-            email: 'kdo@gmail.com',
-            auth: 'user',
-            status: 'ok',
-            createDate: '2015-11-12'
-          },
-        ],
+        users,
       }),
       methods: {
-        handleClick: () => {
-          console.log('clicked');
+        async search () {
+          const {
+            accountId,
+            name,
+            email,
+            auth,
+            status,
+          } = this;
+          const res = await axios({
+            method: 'get',
+            url: '/api/users',
+            data: {
+              accountId,
+              name,
+              email,
+              auth,
+              status,
+            },
+          });
+          this.users = res.data;
+        },
+        reset () {
+          alert(this);
         },
       },
     };

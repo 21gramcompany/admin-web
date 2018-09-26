@@ -44,6 +44,8 @@
                                         v-model="email"
                                 />
                             </v-flex>
+                        </v-layout>
+                        <v-layout row wrap>
                             <v-flex>
                                 <v-select
                                         label="Auth"
@@ -80,7 +82,7 @@
         <v-toolbar flat color="white">
             <v-spacer/>
             <v-btn color="info" href="/users/new">New<v-icon right>add</v-icon></v-btn>
-            <v-btn color="error">Delete<v-icon right>delete</v-icon></v-btn>
+            <v-btn color="error" @click="remove">Delete<v-icon right>delete</v-icon></v-btn>
         </v-toolbar>
         <v-data-table
                 select-all
@@ -171,33 +173,53 @@
       },
       methods: {
         async search () {
-          const {
-            accountId,
-            name,
-            email,
-            auth,
-            status,
-          } = this;
-          const { sortBy, descending, page, rowsPerPage } = this.pagination;
-          this.$store.commit('startLoading');
-          const res = await axios({
-            method: 'get',
-            url: '/api/users',
-            data: {
+          try {
+            const {
               accountId,
               name,
               email,
               auth,
               status,
-              sortBy,
-              descending,
-              page,
-              rowsPerPage,
-            },
-          });
-          this.$store.commit('endLoading');
-          this.users = res.data.users;
-          this.count = res.data.count;
+            } = this;
+            const { sortBy, descending, page, rowsPerPage } = this.pagination;
+            this.$store.commit('startLoading');
+            const res = await axios({
+              method: 'get',
+              url: '/api/users',
+              data: {
+                accountId,
+                name,
+                email,
+                auth,
+                status,
+                sortBy,
+                descending,
+                page,
+                rowsPerPage,
+              },
+            });
+            this.$store.commit('endLoading');
+            this.users = res.data.users;
+            this.count = res.data.count;
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        async remove () {
+          try {
+            const { selected } = this;
+            const res = await axios({
+              method: 'delete',
+              url: '/api/users',
+              data: {
+                selected,
+              },
+            });
+            console.log(res);
+          } catch (error) {
+            console.log(error);
+          }
+          this.search();
         },
         reset () {
           alert(this);

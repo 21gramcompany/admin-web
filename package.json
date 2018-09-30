@@ -6,8 +6,9 @@
   "scripts": {
     "dev": "backpack dev",
     "debug": "npm run build && node --inspect build/main",
-    "debug2": "node --inspect build/main",
-    "build": "cross-env NODE_ENV=production nuxt build && backpack build",
+    "debugnb": "node --inspect build/main",
+    "build": "gulp",
+    "buildb": "cross-env NODE_ENV=production nuxt build && backpack build",
     "start": "cross-env NODE_ENV=production node build/main.js",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "fix": "eslint --fix --ext .js,.vue ."
@@ -29,6 +30,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "material-design-icons-iconfont": "^3.0.3",
+    "moment": "^2.22.2",
     "nuxt": "^2.0.0",
     "qs": "^6.5.2",
     "ramda": "^0.25.0",
@@ -45,6 +47,10 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0"
+    "eslint-plugin-standard": "^4.0.0",
+    "gulp": "^3.9.1",
+    "gulp-zip": "^4.2.0",
+    "run-sequence": "^2.2.1",
+    "shelljs": "^0.8.2"
   }
 }

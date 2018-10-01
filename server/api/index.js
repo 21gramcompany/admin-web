@@ -13,7 +13,6 @@ async function proxyRouter (req, res, next) {
       method,
       url: `${url}?${qs.stringify(query)}`,
       data: body,
-      port: 3000,
     }));
     res.status(response.status).json(response.data);
   } catch (error) {

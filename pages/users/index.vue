@@ -174,6 +174,7 @@
       methods: {
         async search () {
           try {
+            
             const {
               accountId,
               name,
@@ -181,26 +182,38 @@
               auth,
               status,
             } = this;
-            const { sortBy, descending, page, rowsPerPage } = this.pagination;
-            this.$store.commit('startLoading');
-            const res = await axios({
-              method: 'get',
-              url: '/api/users',
-              data: {
-                accountId,
-                name,
-                email,
-                auth,
-                status,
-                sortBy,
-                descending,
-                page,
-                rowsPerPage,
-              },
-            });
-            this.$store.commit('endLoading');
-            this.users = res.data.users;
-            this.count = res.data.count;
+            // const { sortBy, descending, page, rowsPerPage } = this.pagination;
+            // this.$store.commit('startLoading');
+            // const res = await axios({
+            //   method: 'get',
+            //   url: '/api/users',
+            //   data: {
+            //     accountId,
+            //     name,
+            //     email,
+            //     auth,
+            //     status,
+            //     sortBy,
+            //     descending,
+            //     page,
+            //     rowsPerPage,
+            //   },
+            // });
+            // this.$store.commit('endLoading'); 
+            console.log('users',this.users)
+            console.log('이름',accountId, name,email,auth,status)
+            
+            let findData = this.users.filter(
+              function (person) { 
+                  return person.accountId === accountId 
+                }
+            );
+            console.log('find',findData);
+            // this.users = findData;
+            // this.users = find;
+            // console.log(res.data.users);
+            // this.users = res.data.users;
+            // this.count = res.data.count;
           } catch (error) {
             console.log(error);
           }
@@ -208,6 +221,16 @@
         async remove () {
           try {
             const { selected } = this;
+            // 선택 selected index 구하기 
+            for (let i = 0; i < selected.length; i++) {
+                const idx = this.users.findIndex( 
+                    function(item) {
+                        return item.id === selected[i].id    
+                    }
+                );
+                this.users.splice(idx,1); // 제거
+            }
+            this.count = this.count -  selected.length;
             const res = await axios({
               method: 'delete',
               url: '/api/users',
@@ -215,6 +238,7 @@
                 selected,
               },
             });
+            this.selected = []; // 초기화 
             console.log(res);
           } catch (error) {
             console.log(error);

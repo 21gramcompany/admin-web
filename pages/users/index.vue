@@ -88,7 +88,7 @@
                 select-all
                 v-model="selected"
                 :headers="headers"
-                :items="users"
+                :items="searchUser"
                 :total-items="count"
                 :pagination.sync="pagination"
                 item-key="id"
@@ -162,6 +162,7 @@
           { text: '탈퇴', status: 'exit' },
         ],
         users,
+        searchUser : []
       }),
       watch: {
         pagination: {
@@ -171,10 +172,10 @@
           deep: true,
         },
       },
+      
       methods: {
         async search () {
-          try {
-            
+          try { 
             const {
               accountId,
               name,
@@ -182,6 +183,7 @@
               auth,
               status,
             } = this;
+            
             // const { sortBy, descending, page, rowsPerPage } = this.pagination;
             // this.$store.commit('startLoading');
             // const res = await axios({
@@ -200,20 +202,20 @@
             //   },
             // });
             // this.$store.commit('endLoading'); 
-            console.log('users',this.users)
-            console.log('이름',accountId, name,email,auth,status)
-            
-            let findData = this.users.filter(
-              function (person) { 
-                  return person.accountId === accountId 
-                }
-            );
-            console.log('find',findData);
-            // this.users = findData;
-            // this.users = find;
-            // console.log(res.data.users);
             // this.users = res.data.users;
             // this.count = res.data.count;
+            
+            if( !!accountId | !!name | !!email | !!auth | !!status ){
+               this.searchUser = this.users.filter(
+                function (person) { 
+                  let options  = person.accountId === accountId | person.name === name  | person.email === email 
+                  | person.auth === auth | person.status === status
+                  return options
+                }
+              );
+              return 
+            }
+            this.searchUser = this.users;
           } catch (error) {
             console.log(error);
           }

@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+    - echo start install
+    - npm i
+  build:
+    commands:
+    - echo Build started on `date`
+    - npm run build
+    - echo end build
+artifacts:
+  files:
+  - build/*
+  - package.json
+  - package-lock.json
+  name: admin-web-$(date +%Y-%m-%d)
+cache:
+  paths:
+  - 'node_modules/**/*'
+

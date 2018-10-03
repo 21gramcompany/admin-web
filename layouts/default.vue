@@ -46,6 +46,7 @@
         { icon: 'person', title: 'User', to: '/users' },
         { icon: 'pets', title: 'Reservation', to: '/reservations' },
         { icon: 'add_alert', title: 'Notice', to: '/notice' },
+        { icon: 'add_alert', title: 'Boards', to: '/boards' }
       ],
       miniVariant: false,
     }),

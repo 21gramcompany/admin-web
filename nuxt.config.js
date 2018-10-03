@@ -25,6 +25,7 @@ module.exports = {
   },
   plugins: [
     { src: '~/plugins/components' },
+    { src: '~/plugins/global-variable' },
   ],
   /*
   ** Customize the progress bar color

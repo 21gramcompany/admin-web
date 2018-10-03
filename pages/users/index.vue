@@ -224,10 +224,10 @@
           try {
             const { selected } = this;
             // 선택 selected index 구하기 
-            for (let i = 0; i < selected.length; i++) {
+            for (var index = 0; index < selected.length; index++) {
                 const idx = this.users.findIndex( 
                     function(item) {
-                        return item.id === selected[i].id    
+                        return item.id === selected[index].id;    
                     }
                 );
                 this.users.splice(idx,1); // 제거

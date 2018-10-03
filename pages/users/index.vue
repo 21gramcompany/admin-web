@@ -70,7 +70,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn color="white">
+                <v-btn color="white" @click='reset()'>
                     Reset<v-icon right>restore</v-icon>
                 </v-btn>
                 <v-btn color="success" @click="search">
@@ -88,7 +88,7 @@
                 select-all
                 v-model="selected"
                 :headers="headers"
-                :items="users"
+                :items="searchUser"
                 :total-items="count"
                 :pagination.sync="pagination"
                 item-key="id"
@@ -162,6 +162,7 @@
           { text: '탈퇴', status: 'exit' },
         ],
         users,
+        searchUser : []
       }),
       watch: {
         pagination: {
@@ -171,9 +172,10 @@
           deep: true,
         },
       },
+      
       methods: {
         async search () {
-          try {
+          try { 
             const {
               accountId,
               name,
@@ -181,6 +183,7 @@
               auth,
               status,
             } = this;
+            /*
             const { sortBy, descending, page, rowsPerPage } = this.pagination;
             this.$store.commit('startLoading');
             const res = await axios({
@@ -198,9 +201,21 @@
                 rowsPerPage,
               },
             });
-            this.$store.commit('endLoading');
+            this.$store.commit('endLoading'); 
             this.users = res.data.users;
             this.count = res.data.count;
+            */            
+            if( !!accountId | !!name | !!email | !!auth | !!status ){
+               this.searchUser = this.users.filter(
+                function (person) { 
+                  let options  = person.accountId === accountId | person.name === name  | person.email === email 
+                  | person.auth === auth | person.status === status
+                  return options
+                }
+              );
+              return 
+            }
+            this.searchUser = this.users;
           } catch (error) {
             console.log(error);
           }
@@ -208,6 +223,16 @@
         async remove () {
           try {
             const { selected } = this;
+            // 선택 selected index 구하기 
+            for (let i = 0; i < selected.length; i++) {
+                const idx = this.users.findIndex( 
+                    function(item) {
+                        return item.id === selected[i].id    
+                    }
+                );
+                this.users.splice(idx,1); // 제거
+            }
+            this.count = this.count -  selected.length;
             const res = await axios({
               method: 'delete',
               url: '/api/users',
@@ -215,14 +240,20 @@
                 selected,
               },
             });
+            this.selected = []; // 초기화 
             console.log(res);
           } catch (error) {
             console.log(error);
           }
           this.search();
         },
-        reset () {
-          alert(this);
+        reset () {   
+          this.accountId = ""
+          this.name = ""
+          this.email = ""
+          this.auth = ""
+          this.status = ""
+        //   alert(this);
         },
       },
     };

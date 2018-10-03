@@ -2,12 +2,14 @@ import express from 'express';
 import { Nuxt, Builder } from 'nuxt';
 
 import api from './api';
+import mock from './mock';
 
 const app = express();
 const host = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 3000;
 
 app.set('port', port);
+app.use('/mock', mock);
 app.use('/api', api);
 
 let config = require('../nuxt.config.js');

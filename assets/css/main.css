@@ -6,3 +6,18 @@ html, body {
     height: 100vh;
     margin: 0;
 }
+
+/**
+ * breadcrumbs background
+ */
+ul.bc-grey {
+    background-color: #EEEEEE;
+    border-radius: 5px;
+}
+
+/**
+ * data-table 최소 컬럼
+ */
+td.short-column {
+    width: 80px;
+}

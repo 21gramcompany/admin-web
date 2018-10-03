@@ -70,7 +70,7 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer/>
-                <v-btn color="white">
+                <v-btn color="white" @click='reset()'>
                     Reset<v-icon right>restore</v-icon>
                 </v-btn>
                 <v-btn color="success" @click="search">
@@ -183,28 +183,28 @@
               auth,
               status,
             } = this;
-            
-            // const { sortBy, descending, page, rowsPerPage } = this.pagination;
-            // this.$store.commit('startLoading');
-            // const res = await axios({
-            //   method: 'get',
-            //   url: '/api/users',
-            //   data: {
-            //     accountId,
-            //     name,
-            //     email,
-            //     auth,
-            //     status,
-            //     sortBy,
-            //     descending,
-            //     page,
-            //     rowsPerPage,
-            //   },
-            // });
-            // this.$store.commit('endLoading'); 
-            // this.users = res.data.users;
-            // this.count = res.data.count;
-            
+            /*
+            const { sortBy, descending, page, rowsPerPage } = this.pagination;
+            this.$store.commit('startLoading');
+            const res = await axios({
+              method: 'get',
+              url: '/api/users',
+              data: {
+                accountId,
+                name,
+                email,
+                auth,
+                status,
+                sortBy,
+                descending,
+                page,
+                rowsPerPage,
+              },
+            });
+            this.$store.commit('endLoading'); 
+            this.users = res.data.users;
+            this.count = res.data.count;
+            */            
             if( !!accountId | !!name | !!email | !!auth | !!status ){
                this.searchUser = this.users.filter(
                 function (person) { 
@@ -247,8 +247,13 @@
           }
           this.search();
         },
-        reset () {
-          alert(this);
+        reset () {   
+          this.accountId = ""
+          this.name = ""
+          this.email = ""
+          this.auth = ""
+          this.status = ""
+        //   alert(this);
         },
       },
     };

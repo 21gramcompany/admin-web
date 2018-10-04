@@ -172,7 +172,7 @@
           deep: true,
         },
       },
-      
+
       methods: {
         async search () {
           try { 
@@ -204,13 +204,13 @@
             this.$store.commit('endLoading'); 
             this.users = res.data.users;
             this.count = res.data.count;
-            */            
+            */      
             if( !!accountId | !!name | !!email | !!auth | !!status ){
                this.searchUser = this.users.filter(
                 function (person) { 
-                  let options  = person.accountId === accountId | person.name === name  | person.email === email 
-                  | person.auth === auth | person.status === status
-                  return options
+                  var options  = person.accountId === accountId | person.name === name  | person.email === email 
+                  | person.auth === auth | person.status === status;
+                  return options;
                 }
               );
               return 

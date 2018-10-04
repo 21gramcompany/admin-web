@@ -6,7 +6,6 @@ import { RouteDef } from '../routes';
 const { log } = console;
 
 export default class NuxtServer {
-
   protected app: any;
   protected host: string;
   protected port: number | string;

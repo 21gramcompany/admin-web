@@ -16,3 +16,6 @@ $ npm run build
 $ npm start
 
 ```
+
+## vscode lint plugin 
+https://github.com/prograhammer/vscode-tslint-vue

@@ -133,106 +133,113 @@
 </template>
 
 <script lang="ts">
+  import {
+    Component,
+    Vue, Watch,
+  } from "nuxt-property-decorator";
   import axios from 'axios';
   import users from '../../common/mock/users';
+  import {Mutation, State} from "vuex-class";
 
-  export default {
-    data: () => ({
-      breadcrumbs: [
-        {text: 'Home', disabled: false, to: '/'},
-        {text: 'user'},
-      ],
-      selected: [],
-      accountId: '',
-      count: 7,
-      pagination: {},
-      name: '',
-      email: '',
-      auth: '',
-      status: '',
-      headers: [
-        {text: 'No', value: 'no', align: 'center'},
-        {text: 'Id', value: 'accountId', align: 'center'},
-        {text: 'Name', value: 'name', align: 'center'},
-        {text: 'email', value: 'email', align: 'center'},
-        {text: 'Auth', value: 'auth', align: 'center'},
-        {text: 'Status', value: 'status', align: 'center'},
-        {text: 'CreateDt', value: 'createDate', align: 'center'},
-      ],
-      authItems: [
-        {text: '선택', status: null},
-        {auth: 'admin', text: '관리자'},
-        {auth: 'user', text: '사용자'},
-        {auth: 'hospital', text: '병원'},
-      ],
-      statusItems: [
-        {text: '선택', status: null},
-        {text: '가입', status: 'join'},
-        {text: '탈퇴', status: 'exit'},
-      ],
-      users,
-    }),
-    watch: {
-      pagination: {
-        async handler() {
-          await this.search();
-        },
-        deep: true,
-      },
-    },
-    methods: {
-      async search() {
-        try {
-          const {
+  @Component
+  export default class extends Vue {
+    breadcrumbs = [
+      {text: 'Home', disabled: false, to: '/'},
+      {text: 'user'},
+    ];
+    users = users;
+    selected = [];
+    accountId = '';
+    count = 0;
+    pagination = {sortBy: '', descending: true, page: 1, rowsPerPage: 5};
+    name = '';
+    email = '';
+    auth = '';
+    status = '';
+    headers = [
+            {text: 'No', value: 'no', align: 'center'},
+            {text: 'Id', value: 'accountId', align: 'center'},
+            {text: 'Name', value: 'name', align: 'center'},
+            {text: 'email', value: 'email', align: 'center'},
+            {text: 'Auth', value: 'auth', align: 'center'},
+            {text: 'Status', value: 'status', align: 'center'},
+            {text: 'CreateDt', value: 'createDate', align: 'center'},
+          ];
+    authItems = [
+            {text: '선택', status: null},
+            {auth: 'admin', text: '관리자'},
+            {auth: 'user', text: '사용자'},
+            {auth: 'hospital', text: '병원'},
+          ];
+    statusItems = [
+            {text: '선택', status: null},
+            {text: '가입', status: 'join'},
+            {text: '탈퇴', status: 'exit'},
+          ];
+
+    @State loading;
+    @Mutation start;
+    @Mutation end;
+
+    @Watch('pagination')
+    async onPaginationChanged(value: object, oldValue: object) {
+      await this.search();
+    }
+
+    async search() {
+      try {
+        const {
+          accountId,
+          name,
+          email,
+          auth,
+          status,
+        } = this;
+        const {sortBy, descending, page, rowsPerPage} = this.pagination;
+        // this.$store.commit('startLoading');
+        this.start();
+        const res = await axios({
+          method: 'get',
+          url: '/api/users',
+          data: {
             accountId,
             name,
             email,
             auth,
             status,
-          } = this;
-          const {sortBy, descending, page, rowsPerPage} = this.pagination;
-          this.$store.commit('startLoading');
-          const res = await axios({
-            method: 'get',
-            url: '/api/users',
-            data: {
-              accountId,
-              name,
-              email,
-              auth,
-              status,
-              sortBy,
-              descending,
-              page,
-              rowsPerPage,
-            },
-          });
-          this.$store.commit('endLoading');
-          this.users = res.data.users;
-          this.count = res.data.count;
-        } catch (error) {
-          console.log(error);
-        }
-      },
-      async remove() {
-        try {
-          const {selected} = this;
-          const res = await axios({
-            method: 'delete',
-            url: '/api/users',
-            data: {
-              selected,
-            },
-          });
-          console.log(res);
-        } catch (error) {
-          console.log(error);
-        }
-        this.search();
-      },
-      reset() {
-        alert(this);
-      },
-    },
-  };
+            sortBy,
+            descending,
+            page,
+            rowsPerPage,
+          },
+        });
+        this.end();
+        this.users = res.data.users;
+        this.count = res.data.count;
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    async remove() {
+      try {
+        const { selected } = this;
+        const res = await axios({
+          method: 'delete',
+          url: '/api/users',
+          data: {
+            selected,
+          },
+        });
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+      this.search();
+    }
+
+    reset() {
+      alert(this);
+    }
+  }
 </script>

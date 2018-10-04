@@ -7,7 +7,7 @@ const sendOption = {
   headers: { 'Content-Type': 'application/json' },
   withCredentials: false,
   maxContentLength: 2000,
-  validateStatus: function (status) {
+  validateStatus (status) {
     return status >= 200 && status < 300;
   },
   maxRedirects: 0,

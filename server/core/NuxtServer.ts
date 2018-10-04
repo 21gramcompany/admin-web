@@ -1,25 +1,27 @@
 import express from 'express';
 import {Nuxt, Builder} from 'nuxt';
 import config from '../../nuxt.config.js';
-import { RouteDef } from '../routes';
+import { RouteDef } from '../routes/index';
 
 const { log } = console;
 
-export default class NuxtServer {
+interface INuxtServer {
+  run(routes: RouteDef[]): void;
+}
+
+export default class NuxtServer implements INuxtServer{
 
   protected app: any;
   protected host: string;
   protected port: number | string;
   private static instance: NuxtServer;
 
-  public static getInstance(): NuxtServer {
+  public static getInstance(): INuxtServer {
     if (this.instance) {
       return this.instance;
     }
-    else {
-      this.instance = new NuxtServer();
-      return this.instance;
-    }
+    this.instance = new NuxtServer();
+    return this.instance;
   }
 
   protected constructor() {
@@ -28,7 +30,7 @@ export default class NuxtServer {
     this.port = process.env.PORT || 3000;
   }
 
-  public run(routes: Array<RouteDef>): void {
+  public run(routes: RouteDef[]): void {
     this.app.set('port', this.port);
     routes.forEach(route => this.app.use(route.path, route.router));
     config.dev = process.env.NODE_ENV !== 'production';

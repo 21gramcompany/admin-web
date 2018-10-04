@@ -32,11 +32,11 @@
             </div>
         </div>
 
-        <ul class="wt_box-web wt_box gray_color diary-footer">
-            <li class="right"><div @click="$router.go(-1)" >목록</div></li>
-            <li class="right"></li>
-            <li class="right"></li>
-        </ul>
+        <div class='submit-btn'>
+            <button class="btn btn-outline-dark btn-lg" @click="beforePage()">목록</button>
+            <button class="btn btn-outline-dark btn-lg" >수정</button>
+            <button class="btn btn-outline-dark btn-lg"  @click="remove(detail.id)">삭제</button>
+        </div>    
     </div>
 </template>
 
@@ -56,16 +56,28 @@
         }
       },
       methods: {
-        
+        beforePage() {
+            this.$router.go(-2)
+        },
+        remove(id) {
+            const idx = this.$boards.findIndex( 
+                function(item) {
+                    return item.id === id;    
+                }
+            );
+            var answer = confirm("정말 삭제 하시겠습니까?");
+            if(answer) {
+                this.$boards.splice(idx,1);
+                return this.$router.go(-2);
+            }
+        }
       }
     };
 </script>
 
 
-<style>
-body{
-    background: #fcfcfc;
-}
+<style scoped>
+
 .section_bottom{
     position: relative;
     border: 1px solid #E7E7E7;
@@ -133,6 +145,15 @@ div {
     border: 1px solid #E7E7E7
 }
 
+div.submit-btn {
+    text-align: right;
+    padding-top: 10px;
+}
+.btn-group-lg>.btn, .btn-lg {
+    height: 42px !important;
+    width: 65px !important; 
+    margin: 0 !important; 
+}
 @media (max-width: 768px) {
     .wt_box-web {
         display:none !important;

@@ -60,7 +60,7 @@ export default {
     methods: {
         boardCreate() {
             var today = new Date(); 
-            var formatData =  today.getFullYear() + "-" + ( today.getMonth()+1 ) + "-" + today.getDate(); 
+            var formatData = this.formatDate(today);
             var addData = {
                 id: this.$boards.length + 1,
                 title : String(this.formData.title),
@@ -68,9 +68,16 @@ export default {
                 name: String(this.formData.name),
                 createDate : formatData
             }
-            
             this.$boards.push(addData);
             this.$router.push('/boards')
+        },
+        formatDate(date) {
+            var month = '' + (date.getMonth() + 1);
+            var day = '' + date.getDate();
+            var year = date.getFullYear();
+            if (month.length < 2) month = '0' + month;
+            if (day.length < 2) day = '0' + day;
+            return [year, month, day].join('-');
         }
     },
     computed: {

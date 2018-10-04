@@ -1,11 +1,11 @@
 <template>
     <div class='wrap-jobdiary'>
         <div class="breadcrumb" style="" ><span class="left">
-            <a href="/boards" class='content-title' style="color:black; text-decoration: none;"><h2 style="color:black;" >21그램 게시판</h2></a></span>
+            <a href="/boards" class='content-title' style="color:black; text-decoration: none;"><h2 style="color:black;" >Boards</h2></a></span>
         </div>
         
         <div class="bo_fx">
-            <button @click="$router.push('/boards/new')" class="real-button btn btn-outline-dark btn-lg" >글 작성</button>
+            <button @click="$router.push('/boards/new')" class="real-button btn btn-outline-dark btn-lg" >글쓰기</button>
         </div>
 
         <table class ='table table-striped'>
@@ -27,14 +27,11 @@
                 </tr>
             </tbody>
         </table>
-        
     </div>
 </template>
 
 <script>
-    // import axios from 'axios'
     import boards from '../../common/mock/boards';
-    
     export default {
         head : {
             link: [{ 
@@ -56,28 +53,17 @@
 
 <style>
 
-body {
-    background-color: white;
-}
 .breadcrumb{
     margin-top: 2%;
 }
 .bo_fx a {
     color: #000 !important;
 }
-a.btn_b01 {
-    display: inline-block;
-    padding: 7px;
-    border: 1px solid #d9ded9;
-    background: #f2f5f9;
-    vertical-align: middle;
-}
+
 a {
     text-decoration: none !important;
 }
-#bo_list_total{
-    display: inline;
-}   
+
 .bo_fx{
     box-sizing: inherit;
 }
@@ -91,9 +77,7 @@ a {
 }
 
 @media (min-width: 768px) {
-    .diary-tbody-real {
-        display:none
-    }
+
 }
 @media (max-width: 768px) {
     .diary-head {
@@ -118,9 +102,6 @@ a {
     }
     #diary-tbody-author{
         height:30px;
-    }
-    .diary-page{
-        display: none;
     }
     .diary-tbody-web {
         display:none

@@ -6,6 +6,7 @@ import { RouteDef } from '../routes';
 const { log } = console;
 
 export default class NuxtServer {
+
   protected app: any;
   protected host: string;
   protected port: number | string;
@@ -38,7 +39,7 @@ export default class NuxtServer {
     }
     this.app.use(nuxt.render);
     this.app.listen(this.port, this.host, () => {
-      log(`server start! host: ${this.host}, port: ${this.port}`);
+      log(`server start!!! host: ${this.host}, port: ${this.port}`);
     });
     return;
   }

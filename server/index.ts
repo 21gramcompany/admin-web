@@ -1,6 +1,7 @@
-import NuxtServer from './Core/NuxtServer'
+import NuxtServer from './core/NuxtServer';
+import routes from './routes'
 
-/* Nuxt.js with Express, Typescript
+/** Nuxt.js with Express, Typescript
  * Nuxt.js
  * https://nuxtjs.org/
  *
@@ -10,5 +11,4 @@ import NuxtServer from './Core/NuxtServer'
  * Typescript
  * https://www.typescriptlang.org/
  */
-
-NuxtServer.getInstance().run();
+NuxtServer.getInstance().run(routes);
